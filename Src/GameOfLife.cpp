@@ -157,17 +157,44 @@ void GameOfLife::Run(Graphics& graphics)
 		}
 	}
 
-	while (graphics.GetInput() != KEY::ESC)
+	KEY keypressed = KEY::NONE;
+	bool paused = false;
+	while (keypressed != KEY::ESC)
 	{
+		keypressed = graphics.GetInput();
+		if (keypressed == KEY::MOUSELEFT)
+		{
+			std::pair<int, int> mousePosition = graphics.GetMousePosition();
+			mousePosition.first /= 10;
+			mousePosition.second /= 10;
+			if (!(mousePosition.first < 0 || mousePosition.first >= sizex || mousePosition.second < 0 || mousePosition.second >= sizey))
+			{
+				(points.begin() + ((mousePosition.second * sizex) + mousePosition.first))->alive = true;
+			}
+		}
+
+		if (keypressed == KEY::SPACE)
+			paused = !paused;
+
 		graphics.ClearScreen();
 		modifiedPoints = points;
 		for (y = 0; y < sizey; y++)
 		{
 			for (x = 0; x < sizex; x++)
 			{
-				if (GetSetAliveness())
+				if (!paused)
 				{
-					graphics.DrawRectangle(x * 10, y * 10, 10, 10);
+					if (GetSetAliveness())
+					{
+						graphics.DrawRectangle(x * 10, y * 10, 10, 10);
+					}
+				}
+				else
+				{
+					if (GetPoint()->alive)
+					{
+						graphics.DrawRectangle(x * 10, y * 10, 10, 10);
+					}
 				}
 			}
 		}

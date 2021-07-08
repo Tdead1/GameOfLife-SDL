@@ -49,9 +49,29 @@ KEY Graphics::GetInput()
 		{
 			if (event.key.keysym.sym == SDLK_ESCAPE)
 				return KEY::ESC;
+			if (event.key.keysym.sym == SDLK_SPACE)
+				return KEY::SPACE;
+		}
+		if (event.type == SDL_MOUSEBUTTONDOWN)
+		{
+			return KEY::MOUSELEFT;
 		}
 	}
 	return KEY::NONE;
+}
+
+std::pair<int, int> Graphics::GetMousePosition()
+{
+	std::pair windowOffset{ 0,0 };
+	std::pair position{ 0,0 };
+
+	SDL_GetWindowPosition(window, &windowOffset.first, &windowOffset.second);
+	SDL_GetGlobalMouseState(&position.first, &position.second);
+
+	position.first -= windowOffset.first;
+	position.second -= windowOffset.second;
+
+	return position;
 }
 
 void Graphics::DrawRectangle(const int x, const int y, const int sizex, const int sizey)
