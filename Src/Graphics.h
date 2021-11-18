@@ -18,7 +18,7 @@ class Graphics
 {
 public:
 	void Init();
-	
+
 	KEY GetInput();
 	std::pair<int, int> GetMousePosition();
 

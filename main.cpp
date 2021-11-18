@@ -1,4 +1,4 @@
-// Game of life.
+ // Game of life.
 #include "Graphics.h"
 #include "GameOfLife.h"
 
@@ -12,4 +12,3 @@ int main()
 	graphics.Exit();
 	return 0;
 }
-

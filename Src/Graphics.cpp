@@ -4,7 +4,7 @@
 #include <vector>
 
 #define SDL_MAIN_HANDLED
-#include "SDL/SDL.h"
+#include "Extern/SDL/SDL.h"
 
 void Graphics::Init()
 {
@@ -76,8 +76,12 @@ std::pair<int, int> Graphics::GetMousePosition()
 
 void Graphics::DrawRectangle(const int x, const int y, const int sizex, const int sizey)
 {
-	SDL_Rect rect(x, y, sizex, sizey);
-	// Set render color to blue ( rect will be rendered in this color )
+	SDL_Rect rect;
+	rect.h = sizey;
+	rect.w = sizex;
+	rect.x = x;
+	rect.y = y;
+	
 	SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
 
 	// Render rect
